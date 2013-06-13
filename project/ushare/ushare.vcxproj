@@ -138,27 +138,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\buffer.c" />
-    <ClCompile Include="..\..\src\cds.c" />
-    <ClCompile Include="..\..\src\cfgparser.c" />
-    <ClCompile Include="..\..\src\cms.c" />
-    <ClCompile Include="..\..\src\content.c" />
-    <ClCompile Include="..\..\src\ctrl_telnet.c" />
-    <ClCompile Include="..\..\src\getopt_win.c" />
-    <ClCompile Include="..\..\src\http.c" />
-    <ClCompile Include="..\..\src\metadata.c" />
-    <ClCompile Include="..\..\src\mime.c" />
-    <ClCompile Include="..\..\src\msr.c" />
-    <ClCompile Include="..\..\src\osdep.c" />
-    <ClCompile Include="..\..\src\presentation.c" />
-    <ClCompile Include="..\..\src\redblack.c" />
-    <ClCompile Include="..\..\src\services.c" />
-    <ClCompile Include="..\..\src\trace.c" />
-    <ClCompile Include="..\..\src\ushare.c" />
-    <ClCompile Include="..\..\src\util_iconv.c" />
-    <ClCompile Include="..\..\src\_stdafx.c" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\..\include\ushare\buffer.h" />
     <ClInclude Include="..\..\include\ushare\cds.h" />
     <ClInclude Include="..\..\include\ushare\cfgparser.h" />
@@ -183,6 +162,27 @@
     <ClInclude Include="..\..\include\ushare\ushare_config.h" />
     <ClInclude Include="..\..\include\ushare\util_iconv.h" />
     <ClInclude Include="..\..\include\ushare\winsock_wrapper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\ushare\buffer.c" />
+    <ClCompile Include="..\..\src\ushare\cds.c" />
+    <ClCompile Include="..\..\src\ushare\cfgparser.c" />
+    <ClCompile Include="..\..\src\ushare\cms.c" />
+    <ClCompile Include="..\..\src\ushare\content.c" />
+    <ClCompile Include="..\..\src\ushare\ctrl_telnet.c" />
+    <ClCompile Include="..\..\src\ushare\getopt_win.c" />
+    <ClCompile Include="..\..\src\ushare\http.c" />
+    <ClCompile Include="..\..\src\ushare\metadata.c" />
+    <ClCompile Include="..\..\src\ushare\mime.c" />
+    <ClCompile Include="..\..\src\ushare\msr.c" />
+    <ClCompile Include="..\..\src\ushare\osdep.c" />
+    <ClCompile Include="..\..\src\ushare\presentation.c" />
+    <ClCompile Include="..\..\src\ushare\redblack.c" />
+    <ClCompile Include="..\..\src\ushare\services.c" />
+    <ClCompile Include="..\..\src\ushare\trace.c" />
+    <ClCompile Include="..\..\src\ushare\ushare.c" />
+    <ClCompile Include="..\..\src\ushare\util_iconv.c" />
+    <ClCompile Include="..\..\src\ushare\_stdafx.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
