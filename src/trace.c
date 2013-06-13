@@ -18,12 +18,15 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <syslog.h>
-#include <stdbool.h>
+#include <stdafx.h>
 
-#include "config.h"
+
+#ifdef _WIN32
+#else
+#include <syslog.h>
+#endif
+
+
 #include "trace.h"
 #include "ushare.h"
 

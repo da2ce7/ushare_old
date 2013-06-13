@@ -1,6 +1,7 @@
-/* buffer.h - String buffer manipulation tools header.
+/*
+ * util_iconv.h : GeeXboX uShare iconv string encoding utilities headers.
  * Originally developped for the GeeXboX project.
- * Copyright (C) 2005-2007 Benjamin Zores <ben@geexbox.org>
+ * Copyright (C) 2005-2007 Alexis Saettler <asbin@asbin.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,24 +16,21 @@
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
  */
 
-#ifndef _STRING_BUFFER_H_
-#define _STRING_BUFFER_H_
+#ifndef _UTIL_ICONV_H_
+#define _UTIL_ICONV_H_
 
-struct buffer_t {
-  char *buf;
-  size_t len;
-  size_t capacity;
-};
+void setup_iconv (void);
+void finish_iconv (void);
 
-struct buffer_t *buffer_new (void)
-    __attribute__ ((malloc));
-void buffer_free (struct buffer_t *buffer);
+#ifdef _MSC_VER
+char *iconv_convert (const char *inbuf);
+#else
+char *iconv_convert (const char *inbuf)
+    __attribute__ ((malloc, nonnull, format_arg (1)));
+#endif
 
-void buffer_append (struct buffer_t *buffer, const char *str);
-void buffer_appendf (struct buffer_t *buffer, const char *format, ...)
-    __attribute__ ((format (printf , 2, 3)));
+#define UTF8 "UTF-8"
 
-#endif /* _STRING_BUFFER_H_ */
+#endif

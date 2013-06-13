@@ -24,7 +24,7 @@
 
 #include <upnp/upnp.h>
 #include <upnp/upnptools.h>
-#include <stdbool.h>
+
 #include <pthread.h>
 
 #ifdef HAVE_DLNA

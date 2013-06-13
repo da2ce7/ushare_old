@@ -1,5 +1,5 @@
 /*
- * trace.h : GeeXboX uShare log facility headers.
+ * content.h : GeeXboX uShare content list header
  * Originally developped for the GeeXboX project.
  * Copyright (C) 2005-2007 Alexis Saettler <asbin@asbin.org>
  *
@@ -18,38 +18,28 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef _TRACE_H_
-#define _TRACE_H_
+#ifndef _CONTENT_H_
+#define _CONTENT_H_
 
-typedef enum {
-  ULOG_NORMAL = 1,
-  ULOG_ERROR = 2,
-  ULOG_VERBOSE = 3,
-} log_level;
+typedef struct content_list {
+  char **content;
+  int count;
+} content_list;
 
-void print_log (log_level level, const char *format, ...)
-  __attribute__ ((format (printf, 2, 3)));
-inline void start_log (void);
+#ifdef _MSC_VER
 
-/* log_info
- * Normal print, to replace printf
- */
-#define log_info(s, str...) {          \
-  print_log (ULOG_NORMAL, (s), ##str); \
-  }
+content_list *content_add(content_list *list, const char *item);
+content_list *content_del(content_list *list, int n);
+void content_free(content_list *list);
 
-/* log_error
- * Error messages, output to stderr
- */
-#define log_error(s, str...) {        \
-  print_log (ULOG_ERROR, (s), ##str); \
-  }
+#else
+content_list *content_add(content_list *list, const char *item)
+    __attribute__ ((malloc));
+content_list *content_del(content_list *list, int n)
+    __attribute__ ((nonnull));
+void content_free(content_list *list)
+    __attribute__ ((nonnull));
 
-/* log_verbose
- * Output only in verbose mode
- */
-#define log_verbose(s, str...) {        \
-  print_log (ULOG_VERBOSE, (s), ##str); \
-  }
+#endif
 
-#endif /* _TRACE_H_ */
+#endif

@@ -18,13 +18,15 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <stdlib.h>
+#include <stdafx.h>
+
+
 
 #if HAVE_LANGINFO_CODESET
 # include <langinfo.h>
 #endif
 
-#include "config.h"
+
 #include "metadata.h"
 #include "content.h"
 #include "buffer.h"
@@ -71,7 +73,7 @@ process_cgi (struct ushare_t *ut, char *cgiargs)
     char *m_buffer = NULL, *buffer;
     int num, shift=0;
 
-    shares = strdup (action + strlen (CGI_ACTION_DEL) + 1);
+    shares = _strdup (action + strlen (CGI_ACTION_DEL) + 1);
     m_buffer = (char*) malloc (strlen (shares) * sizeof (char));
     if (m_buffer)
     {

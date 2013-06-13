@@ -18,10 +18,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
+#include <stdafx.h>
 
 #include "util_iconv.h"
 
@@ -89,7 +86,7 @@ iconv_convert (const char *input)
 
   /* conversion not necessary. save our time. */
   if (!cd)
-    return strdup (input);
+    return _strdup (input);
 
   /* Determine the length we need. */
   iconv (cd, NULL, NULL, NULL, &dummy);
@@ -165,6 +162,6 @@ iconv_convert (const char *input)
 
   return result;
 #else
-  return strdup (input);
+  return _strdup (input);
 #endif
 }

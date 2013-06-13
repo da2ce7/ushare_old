@@ -1,7 +1,7 @@
 /*
- * util_iconv.h : GeeXboX uShare iconv string encoding utilities headers.
+ * osdep.h : GeeXboX uShare OS independant helpers headers.
  * Originally developped for the GeeXboX project.
- * Copyright (C) 2005-2007 Alexis Saettler <asbin@asbin.org>
+ * Copyright (C) 2005-2007 Benjamin Zores <ben@geexbox.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,46 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef _UTIL_ICONV_H_
-#define _UTIL_ICONV_H_
+#ifndef _OS_DEP_H_
+#define _OS_DEP_H_
 
-void setup_iconv (void);
-void finish_iconv (void);
-char *iconv_convert (const char *inbuf)
-    __attribute__ ((malloc, nonnull, format_arg (1)));
 
-#define UTF8 "UTF-8"
+#ifdef _WIN32
+	typedef int bool;
 
+	#ifndef true
+	#define true 1
+	#endif
+	#ifndef false
+	#define false 0
+	#endif
+#else
+	#include <stdbool.h>
 #endif
+
+
+#ifdef _WIN32
+#include <io.h>
+#else
+#include <unistd.h>
+#endif
+
+#ifdef _WIN32
+#include <getopt_win.h>
+#else
+#include <getopt.h>
+#endif
+
+#ifdef _WIN32
+typedef __int32 int32_t;
+typedef unsigned __int32 uint32_t;
+typedef int socklen_t;
+#endif
+
+#if (defined(BSD) || defined(__FreeBSD__))
+
+char *strndup (const char *s, size_t n);
+ssize_t getline (char **lineptr, size_t *n, FILE *stream);
+#endif
+
+#endif /* _OS_DEP_H_ */

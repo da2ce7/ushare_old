@@ -19,14 +19,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
+#include <stdafx.h>
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
+
+
+
+
+
 
 #include <upnp/upnp.h>
 #include <upnp/upnptools.h>
@@ -188,10 +190,10 @@ get_file_memory (const char *fullpath, const char *description,
   struct web_file_t *file;
 
   file = malloc (sizeof (struct web_file_t));
-  file->fullpath = strdup (fullpath);
+  file->fullpath = _strdup (fullpath);
   file->pos = 0;
   file->type = FILE_MEMORY;
-  file->detail.memory.contents = strdup (description);
+  file->detail.memory.contents = _strdup (description);
   file->detail.memory.len = length;
 
   return ((UpnpWebFileHandle) file);
@@ -242,7 +244,7 @@ http_open (const char *filename, enum UpnpOpenFileMode mode)
     return NULL;
 
   file = malloc (sizeof (struct web_file_t));
-  file->fullpath = strdup (entry->fullpath);
+  file->fullpath = _strdup (entry->fullpath);
   file->pos = 0;
   file->type = FILE_LOCAL;
   file->detail.local.entry = entry;
@@ -286,10 +288,17 @@ http_read (UpnpWebFileHandle fh, char *buf, size_t buflen)
   return len;
 }
 
+#ifdef _MSC_VER
+static int
+http_write (UpnpWebFileHandle fh ,
+            char *buf ,
+            size_t buflen )
+#else
 static int
 http_write (UpnpWebFileHandle fh __attribute__((unused)),
             char *buf __attribute__((unused)),
             size_t buflen __attribute__((unused)))
+#endif
 {
   log_verbose ("http write\n");
 

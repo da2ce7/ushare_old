@@ -19,8 +19,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <stdlib.h>
-#include <string.h>
+#include <stdafx.h>
+
+
+
 
 #include "mime.h"
 #include "ushare.h"
@@ -146,5 +148,5 @@ char *mime_get_protocol (struct mime_type_t *mime)
 
   sprintf (protocol, mime->mime_protocol);
   strcat (protocol, "*");
-  return strdup (protocol);
+  return _strdup (protocol);
 }

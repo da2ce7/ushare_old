@@ -19,14 +19,16 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <stdio.h>
-#include <signal.h>
-#include <string.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <errno.h>
-#include <getopt.h>
+#include <stdafx.h>
+
+
+
+
+
+
+
+
+
 
 #if (defined(BSD) || defined(__FreeBSD__) || defined(__APPLE__))
 #include <sys/socket.h>
@@ -38,11 +40,14 @@
 #include <net/route.h>
 #endif
 
+#ifdef _WIN32
+#else
 #include <net/if.h>
 #include <sys/ioctl.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <stdbool.h>
+
 #include <fcntl.h>
 
 #ifdef HAVE_IFADDRS_H
@@ -60,7 +65,7 @@
 # include <locale.h>
 #endif
 
-#include "config.h"
+
 #include "ushare.h"
 #include "services.h"
 #include "http.h"
@@ -75,8 +80,12 @@
 
 struct ushare_t *ut = NULL;
 
+#ifdef _MSC_VER
+static struct ushare_t * ushare_new (void);
+#else
 static struct ushare_t * ushare_new (void)
     __attribute__ ((malloc));
+#endif
 
 static struct ushare_t *
 ushare_new (void)
@@ -85,9 +94,9 @@ ushare_new (void)
   if (!ut)
     return NULL;
 
-  ut->name = strdup (DEFAULT_USHARE_NAME);
-  ut->interface = strdup (DEFAULT_USHARE_IFACE);
-  ut->model_name = strdup (DEFAULT_USHARE_NAME);
+  ut->name = _strdup (DEFAULT_USHARE_NAME);
+  ut->interface = _strdup (DEFAULT_USHARE_IFACE);
+  ut->model_name = _strdup (DEFAULT_USHARE_NAME);
   ut->contentlist = NULL;
   ut->rb = rbinit (rb_compare, NULL);
   ut->root_entry = NULL;
@@ -238,9 +247,15 @@ handle_action_request (struct Upnp_Action_Request *request)
   request->ErrCode = UPNP_SOAP_E_INVALID_ACTION;
 }
 
+
+#ifdef _MSC_VER
+device_callback_event_handler (Upnp_EventType type, void *event,
+                               void *cookie )
+#else
 static int
 device_callback_event_handler (Upnp_EventType type, void *event,
                                void *cookie __attribute__((unused)))
+#endif
 {
   switch (type)
     {
@@ -640,14 +655,24 @@ restart_upnp (struct ushare_t *ut)
   return (init_upnp (ut));
 }
 
+#ifdef _MSC_VER
+static void
+UPnPBreak (int s)
+#else
 static void
 UPnPBreak (int s __attribute__ ((unused)))
+#endif
 {
   ushare_signal_exit ();
 }
 
+#ifdef _MSC_VER
+static void
+reload_config (int s )
+#else
 static void
 reload_config (int s __attribute__ ((unused)))
+#endif
 {
   struct ushare_t *ut2;
   bool reload = false;
@@ -743,10 +768,17 @@ setup_i18n(void)
 
 #define SHUTDOWN_MSG _("Server is shutting down: other clients will be notified soon, Bye bye ...\n")
 
+#ifdef _MSC_VER
+static void
+ushare_kill (ctrl_telnet_client *client,
+			 int argc ,
+             char **argv )
+#else
 static void
 ushare_kill (ctrl_telnet_client *client,
              int argc __attribute__((unused)),
              char **argv __attribute__((unused)))
+#endif
 {
   if (ut->use_telnet)
   {
@@ -787,7 +819,7 @@ main (int argc, char **argv)
     name = malloc (strlen (XBOX_MODEL_NAME) + strlen (ut->model_name) + 4);
     sprintf (name, "%s (%s)", XBOX_MODEL_NAME, ut->model_name);
     free (ut->model_name);
-    ut->model_name = strdup (name);
+    ut->model_name = _strdup (name);
     free (name);
 
     ut->starting_id = STARTING_ENTRY_ID_XBOX360;

@@ -23,7 +23,7 @@
 
 #include <upnp/upnp.h>
 #include <upnp/upnptools.h>
-#include <stdbool.h>
+
 #include <sys/types.h>
 
 #include "ushare.h"

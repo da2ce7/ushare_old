@@ -19,7 +19,9 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <stdlib.h>
+#include <stdafx.h>
+
+
 #include <upnp/upnp.h>
 #include <upnp/upnptools.h>
 
@@ -185,7 +187,7 @@ filter_has_val (const char *filter, const char *val)
   if (!strcmp (filter, "*"))
     return true;
 
-  x = strdup (filter);
+  x = _strdup (filter);
   if (x)
   {
     m_buffer = (char*) malloc (strlen (x));

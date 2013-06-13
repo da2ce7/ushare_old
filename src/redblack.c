@@ -19,14 +19,16 @@ static char rcsid[]="$Id: redblack.c,v 1.9 2003/10/24 01:31:21 damo Exp $";
    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <stdafx.h>
+
 /* Implement the red/black tree structure. It is designed to emulate
 ** the standard tsearch() stuff. i.e. the calling conventions are
 ** exactly the same
 */
 
 #include <stddef.h>
-#include <stdlib.h>
-#include <unistd.h>
+
+
 #include "redblack.h"
 
 #define assert(expr)

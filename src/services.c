@@ -19,7 +19,9 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <stdlib.h>
+#include <stdafx.h>
+
+
 #include <upnp/upnp.h>
 #include <upnp/upnptools.h>
 
@@ -99,7 +101,7 @@ upnp_add_response (struct action_event_t *event, char *key, const char *value)
   if (!event || !event->status || !key || !value)
     return false;
 
-  val = strdup (value);
+  val = _strdup (value);
   if (!val)
     return false;
 
@@ -145,8 +147,8 @@ upnp_get_string (struct Upnp_Action_Request *request, const char *key)
     {
       node = ixmlNode_getFirstChild (node);
       if (!node)
-        return strdup ("");
-      return strdup (ixmlNode_getNodeValue (node));
+        return _strdup ("");
+      return _strdup (ixmlNode_getNodeValue (node));
     }
 
   log_verbose ("Missing action request argument (%s)\n", key);

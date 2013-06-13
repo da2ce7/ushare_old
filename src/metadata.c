@@ -18,14 +18,19 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+#include <stdafx.h>
+
+
+#ifdef _WIN32
+#else
 #include <dirent.h>
+#endif
+
+
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <unistd.h>
-#include <stdbool.h>
+
+
 
 #include <upnp/upnp.h>
 #include <upnp/upnptools.h>
@@ -202,7 +207,7 @@ upnp_entry_new (struct ushare_t *ut, const char *name, const char *fullpath,
   else
     entry->id = ut->starting_id + ut->nr_entries++;
   
-  entry->fullpath = fullpath ? strdup (fullpath) : NULL;
+  entry->fullpath = fullpath ? _strdup (fullpath) : NULL;
   entry->parent = parent;
   entry->child_count =  dir ? 0 : -1;
   entry->title = NULL;
@@ -237,7 +242,7 @@ upnp_entry_new (struct ushare_t *ut, const char *name, const char *fullpath,
         log_error ("URL string too long for id %d, truncated!!", entry->id);
 
       /* Only malloc() what we really need */
-      entry->url = strdup (url_tmp);
+      entry->url = _strdup (url_tmp);
     }
   else /* container */
     {
@@ -254,7 +259,7 @@ upnp_entry_new (struct ushare_t *ut, const char *name, const char *fullpath,
   {
     if (ut->override_iconv_err)
     {
-      title_or_name = strdup (name);
+      title_or_name = _strdup (name);
       log_error ("Entry invalid name id=%d [%s]\n", entry->id, name);
     }
     else
@@ -282,7 +287,7 @@ upnp_entry_new (struct ushare_t *ut, const char *name, const char *fullpath,
   if (!strcmp (title_or_name, "")) /* DIDL dc:title can't be empty */
   {
     free (title_or_name);
-    entry->title = strdup (TITLE_UNKNOWN);
+    entry->title = _strdup (TITLE_UNKNOWN);
   }
 
   entry->size = size;
@@ -575,9 +580,15 @@ build_metadata_list (struct ushare_t *ut)
   ut->init = 1;
 }
 
+#ifdef _MSC_VER
+int
+rb_compare (const void *pa, const void *pb,
+            const void *config )
+#else
 int
 rb_compare (const void *pa, const void *pb,
             const void *config __attribute__ ((unused)))
+#endif
 {
   struct upnp_entry_lookup_t *a, *b;
 
